@@ -27,7 +27,7 @@ public class GlobalExceptionHandler {
                 .stream()
                 .map(error -> error.getField() + ": " + error.getDefaultMessage())
                 .collect(Collectors.toList());
-        ApiError apiError = new ApiError(HttpStatus.BAD_REQUEST, "Invalid data", errors);
+        ApiError apiError = new ApiError(HttpStatus.BAD_REQUEST, "Dados inválidos", errors);
         return new ResponseEntity<>(apiError, apiError.getStatus());
     }
 
