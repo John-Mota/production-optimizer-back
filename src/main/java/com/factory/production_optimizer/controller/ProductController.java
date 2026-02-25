@@ -14,26 +14,26 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.UUID;
 
-@Tag(name = "Products", description = "API for managing products")
-@RequestMapping("/api/products")
+@Tag(name = "Produtos", description = "API para gerenciamento de produtos")
+@RequestMapping("/products")
 public interface ProductController {
 
-    @Operation(summary = "Create a new product")
+    @Operation(summary = "Cria um novo produto")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "Product created successfully"),
-            @ApiResponse(responseCode = "400", description = "Invalid input data")
+            @ApiResponse(responseCode = "201", description = "Produto criado com sucesso"),
+            @ApiResponse(responseCode = "400", description = "Dados de entrada inválidos")
     })
     @PostMapping
     ResponseEntity<ProductResponseDTO> create(@Valid @RequestBody ProductRequestDTO requestDTO);
 
-    @Operation(summary = "List all products")
+    @Operation(summary = "Lista todos os produtos")
     @GetMapping
     ResponseEntity<List<ProductResponseDTO>> findAll();
 
-    @Operation(summary = "Delete a product")
+    @Operation(summary = "Deleta um produto")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "204", description = "Product deleted successfully"),
-            @ApiResponse(responseCode = "404", description = "Product not found")
+            @ApiResponse(responseCode = "204", description = "Produto deletado com sucesso"),
+            @ApiResponse(responseCode = "404", description = "Produto não encontrado")
     })
     @DeleteMapping("/{id}")
     ResponseEntity<Void> delete(@PathVariable UUID id);

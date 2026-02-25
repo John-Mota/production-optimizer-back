@@ -8,11 +8,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-@Tag(name = "Production Optimization", description = "API for production optimization")
-@RequestMapping("/api/optimization")
+@Tag(name = "Otimização de Produção", description = "API para otimização da produção")
+@RequestMapping("/optimization")
 public interface OptimizationController {
 
-    @Operation(summary = "Calculate the maximum profit production plan")
+    @Operation(summary = "Calcula o plano de produção de lucro máximo")
     @GetMapping("/optimize")
     ResponseEntity<OptimizationResultDTO> optimizeProduction();
 }

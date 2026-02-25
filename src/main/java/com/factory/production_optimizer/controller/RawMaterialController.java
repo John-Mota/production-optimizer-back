@@ -14,34 +14,34 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.UUID;
 
-@Tag(name = "Raw Materials", description = "API for managing raw materials")
-@RequestMapping("/api/materials")
+@Tag(name = "Matérias-Primas", description = "API para gerenciamento de matérias-primas")
+@RequestMapping("/materials")
 public interface RawMaterialController {
 
-    @Operation(summary = "Create a new raw material")
+    @Operation(summary = "Cria uma nova matéria-prima")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "Raw material created successfully"),
-            @ApiResponse(responseCode = "400", description = "Invalid input data")
+            @ApiResponse(responseCode = "201", description = "Matéria-prima criada com sucesso"),
+            @ApiResponse(responseCode = "400", description = "Dados de entrada inválidos")
     })
     @PostMapping
     ResponseEntity<RawMaterialResponseDTO> create(@Valid @RequestBody RawMaterialRequestDTO requestDTO);
 
-    @Operation(summary = "List all raw materials")
+    @Operation(summary = "Lista todas as matérias-primas")
     @GetMapping
     ResponseEntity<List<RawMaterialResponseDTO>> findAll();
 
-    @Operation(summary = "Update an existing raw material")
+    @Operation(summary = "Atualiza uma matéria-prima existente")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Raw material updated successfully"),
-            @ApiResponse(responseCode = "404", description = "Raw material not found")
+            @ApiResponse(responseCode = "200", description = "Matéria-prima atualizada com sucesso"),
+            @ApiResponse(responseCode = "404", description = "Matéria-prima não encontrada")
     })
     @PutMapping("/{id}")
     ResponseEntity<RawMaterialResponseDTO> update(@PathVariable UUID id, @Valid @RequestBody RawMaterialRequestDTO requestDTO);
 
-    @Operation(summary = "Delete a raw material")
+    @Operation(summary = "Deleta uma matéria-prima")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "204", description = "Raw material deleted successfully"),
-            @ApiResponse(responseCode = "404", description = "Raw material not found")
+            @ApiResponse(responseCode = "204", description = "Matéria-prima deletada com sucesso"),
+            @ApiResponse(responseCode = "404", description = "Matéria-prima não encontrada")
     })
     @DeleteMapping("/{id}")
     ResponseEntity<Void> delete(@PathVariable UUID id);
