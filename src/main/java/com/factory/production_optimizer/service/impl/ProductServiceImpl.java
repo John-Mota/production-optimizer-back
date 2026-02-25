@@ -39,7 +39,7 @@ public class ProductServiceImpl implements ProductService {
         List<ProductComposition> composition = requestDTO.composition().stream()
                 .map(item -> {
                     RawMaterial rawMaterial = rawMaterialRepository.findById(item.rawMaterialId())
-                            .orElseThrow(() -> new EntityNotFoundException("RawMaterial not found with id: " + item.rawMaterialId()));
+                            .orElseThrow(() -> new EntityNotFoundException("Matéria-prima não encontrada com o id: " + item.rawMaterialId()));
                     ProductComposition pc = new ProductComposition();
                     pc.setProduct(product);
                     pc.setRawMaterial(rawMaterial);
@@ -65,7 +65,7 @@ public class ProductServiceImpl implements ProductService {
     @Transactional
     public void delete(UUID id) {
         if (!productRepository.existsById(id)) {
-            throw new EntityNotFoundException("Product not found with id: " + id);
+            throw new EntityNotFoundException("Produto não encontrado com o id: " + id);
         }
         productRepository.deleteById(id);
     }

@@ -45,7 +45,7 @@ public class RawMaterialServiceImpl implements RawMaterialService {
     @Transactional
     public RawMaterialResponseDTO update(UUID id, RawMaterialRequestDTO requestDTO) {
         RawMaterial rawMaterial = rawMaterialRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("RawMaterial not found with id: " + id));
+                .orElseThrow(() -> new EntityNotFoundException("Matéria-prima não encontrada com o id: " + id));
         rawMaterial.setName(requestDTO.name());
         rawMaterial.setStockQuantity(requestDTO.stockQuantity());
         RawMaterial updatedRawMaterial = rawMaterialRepository.save(rawMaterial);
@@ -56,7 +56,7 @@ public class RawMaterialServiceImpl implements RawMaterialService {
     @Transactional
     public void delete(UUID id) {
         if (!rawMaterialRepository.existsById(id)) {
-            throw new EntityNotFoundException("RawMaterial not found with id: " + id);
+            throw new EntityNotFoundException("Matéria-prima não encontrada com o id: " + id);
         }
         rawMaterialRepository.deleteById(id);
     }
