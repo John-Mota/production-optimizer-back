@@ -10,5 +10,6 @@ import java.util.UUID;
 public interface ProductService {
     ProductResponseDTO create(ProductRequestDTO requestDTO);
     List<ProductResponseDTO> findAll();
+    ProductResponseDTO update(UUID id, ProductRequestDTO requestDTO);
     void delete(UUID id);
 }

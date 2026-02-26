@@ -32,6 +32,11 @@ public class ProductControllerImpl implements ProductController {
     }
 
     @Override
+    public ResponseEntity<ProductResponseDTO> update(UUID id, ProductRequestDTO requestDTO) {
+        return ResponseEntity.ok(productService.update(id, requestDTO));
+    }
+
+    @Override
     public ResponseEntity<Void> delete(UUID id) {
         productService.delete(id);
         return ResponseEntity.noContent().build();

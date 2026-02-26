@@ -30,6 +30,15 @@ public interface ProductController {
     @GetMapping
     ResponseEntity<List<ProductResponseDTO>> findAll();
 
+    @Operation(summary = "Atualiza um produto existente")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Produto atualizado com sucesso"),
+            @ApiResponse(responseCode = "404", description = "Produto não encontrado"),
+            @ApiResponse(responseCode = "400", description = "Dados de entrada inválidos")
+    })
+    @PutMapping("/{id}")
+    ResponseEntity<ProductResponseDTO> update(@PathVariable UUID id, @Valid @RequestBody ProductRequestDTO requestDTO);
+
     @Operation(summary = "Deleta um produto")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "204", description = "Produto deletado com sucesso"),

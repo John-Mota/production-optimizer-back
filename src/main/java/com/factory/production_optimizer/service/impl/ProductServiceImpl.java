@@ -37,15 +37,7 @@ public class ProductServiceImpl implements ProductService {
         product.setSalePrice(requestDTO.salePrice());
 
         List<ProductComposition> composition = requestDTO.composition().stream()
-                .map(item -> {
-                    RawMaterial rawMaterial = rawMaterialRepository.findById(item.rawMaterialId())
-                            .orElseThrow(() -> new EntityNotFoundException("Matéria-prima não encontrada com o id: " + item.rawMaterialId()));
-                    ProductComposition pc = new ProductComposition();
-                    pc.setProduct(product);
-                    pc.setRawMaterial(rawMaterial);
-                    pc.setQuantity(item.quantity());
-                    return pc;
-                })
+                .map(item -> createCompositionItem(product, item))
                 .collect(Collectors.toList());
 
         product.setComposition(composition);
@@ -63,11 +55,41 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     @Transactional
+    public ProductResponseDTO update(UUID id, ProductRequestDTO requestDTO) {
+        Product product = productRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Produto não encontrado com o id: " + id));
+
+        product.setName(requestDTO.name());
+        product.setSalePrice(requestDTO.salePrice());
+
+        // Clear old composition and add the new one
+        product.getComposition().clear();
+        List<ProductComposition> newComposition = requestDTO.composition().stream()
+                .map(item -> createCompositionItem(product, item))
+                .collect(Collectors.toList());
+        product.getComposition().addAll(newComposition);
+
+        Product updatedProduct = productRepository.save(product);
+        return toResponseDTO(updatedProduct);
+    }
+
+    @Override
+    @Transactional
     public void delete(UUID id) {
         if (!productRepository.existsById(id)) {
             throw new EntityNotFoundException("Produto não encontrado com o id: " + id);
         }
         productRepository.deleteById(id);
+    }
+
+    private ProductComposition createCompositionItem(Product product, CompositionItemDTO item) {
+        RawMaterial rawMaterial = rawMaterialRepository.findById(item.rawMaterialId())
+                .orElseThrow(() -> new EntityNotFoundException("Matéria-prima não encontrada com o id: " + item.rawMaterialId()));
+        ProductComposition pc = new ProductComposition();
+        pc.setProduct(product);
+        pc.setRawMaterial(rawMaterial);
+        pc.setQuantity(item.quantity());
+        return pc;
     }
 
     private ProductResponseDTO toResponseDTO(Product product) {
