@@ -1,6 +1,7 @@
 
 package com.factory.production_optimizer.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -20,6 +21,7 @@ public class ProductComposition {
 
     @ManyToOne
     @JoinColumn(name = "product_id")
+    @JsonIgnore // Esta anotação quebra o ciclo de serialização
     private Product product;
 
     @ManyToOne
